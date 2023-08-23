@@ -4,8 +4,10 @@ using Template.Data.Context;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<TemplateContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
-
+builder.Services.AddDbContext<TemplateContext>(x => x.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString"),
+                                                                    b => b.MigrationsAssembly(typeof(TemplateContext).Assembly.FullName)
+                                                                   )
+                                              );
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
